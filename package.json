@@ -1,0 +1,9 @@
+{
+  "name": "stock_knowledge",
+  "version": "1.0.0",
+  "description": "股票知识库，记录股票相关问题及解决方案。",
+  "scripts": {
+    "docs": "bash tools/init-docs.sh"
+  },
+  "private": true
+}

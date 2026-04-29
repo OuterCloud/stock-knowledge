@@ -1,0 +1,4 @@
+# RSI分析器依赖库
+yfinance>=0.2.0  # Yahoo Finance数据获取
+pandas>=1.5.0     # 数据处理
+numpy>=1.21.0     # 数值计算

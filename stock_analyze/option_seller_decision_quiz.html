@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <title>期权卖方决策在线测评</title>
+    <style>
+      body {
+        font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC",
+          "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+        background: #f7f7f7;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        max-width: 800px;
+        margin: 40px auto;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px #0001;
+        padding: 32px;
+      }
+      h1 {
+        text-align: center;
+      }
+      .question {
+        margin-bottom: 24px;
+      }
+      .question-title {
+        font-weight: bold;
+        margin-bottom: 8px;
+      }
+      .score {
+        color: #888;
+        font-size: 0.95em;
+        margin-left: 8px;
+      }
+      .result {
+        font-size: 1.3em;
+        color: #1976d2;
+        text-align: center;
+        margin-top: 32px;
+      }
+      button {
+        background: #1976d2;
+        color: #fff;
+        border: none;
+        padding: 12px 32px;
+        border-radius: 4px;
+        font-size: 1em;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #125ea2;
+      }
+      .options label {
+        margin-right: 24px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>期权卖方决策在线测评</h1>
+      <form id="quizForm">
+        <div class="question">
+          <div class="question-title">
+            1. 市场和宏观判断：你当前的宏观立场？<span class="score"
+              >[5分]</span
+            >
+          </div>
+          <div class="options">
+            <label
+              ><input type="radio" name="q1" value="bull" required />
+              牛市</label
+            >
+            <label><input type="radio" name="q1" value="neutral" /> 中性</label>
+            <label><input type="radio" name="q1" value="bear" /> 熊市</label>
+          </div>
+        </div>
+        <div class="question">
+          <div class="question-title">
+            2. 期权市场条件：当前IV Rank是多少？<span class="score"
+              >[10分]</span
+            >
+          </div>
+          <input
+            type="number"
+            name="q2"
+            min="0"
+            max="100"
+            step="1"
+            required
+            style="width: 80px"
+          />
+          %
+          <span style="color: #888; font-size: 0.95em"
+            >（IV Rank &gt; 60% 推荐卖方）</span
+          >
+        </div>
+        <div class="question">
+          <div class="question-title">
+            3. 合约流动性：bid/ask spread ≤ 0.1美元，OI ≥ 100？<span
+              class="score"
+              >[10分]</span
+            >
+          </div>
+          <div class="options">
+            <label
+              ><input type="radio" name="q3" value="yes" required /> 是</label
+            >
+            <label><input type="radio" name="q3" value="no" /> 否</label>
+          </div>
+        </div>
+        <div class="question">
+          <div class="question-title">
+            4. 公司基本面：你愿意以行权价长期持有该股吗？<span class="score"
+              >[15分]</span
+            >
+          </div>
+          <div class="options">
+            <label
+              ><input type="radio" name="q4" value="yes" required /> 是</label
+            >
+            <label><input type="radio" name="q4" value="no" /> 否</label>
+          </div>
+        </div>
+        <div class="question">
+          <div class="question-title">
+            5. 未来30天内有重大事件（财报/监管/诉讼等）？<span class="score"
+              >[10分]</span
+            >
+          </div>
+          <div class="options">
+            <label
+              ><input type="radio" name="q5" value="no" required /> 没有</label
+            >
+            <label><input type="radio" name="q5" value="yes" /> 有</label>
+          </div>
+        </div>
+        <div class="question">
+          <div class="question-title">
+            6. 行权价是否设在强支撑下方，且有安全边际？<span class="score"
+              >[10分]</span
+            >
+          </div>
+          <div class="options">
+            <label
+              ><input type="radio" name="q6" value="yes" required /> 是</label
+            >
+            <label><input type="radio" name="q6" value="no" /> 否</label>
+          </div>
+        </div>
+        <div class="question">
+          <div class="question-title">
+            7. 最大潜在下行（-30%场景）的保证金与追加保证金可承受？<span
+              class="score"
+              >[10分]</span
+            >
+          </div>
+          <div class="options">
+            <label
+              ><input type="radio" name="q7" value="yes" required /> 是</label
+            >
+            <label><input type="radio" name="q7" value="no" /> 否</label>
+          </div>
+        </div>
+        <div class="question">
+          <div class="question-title">
+            8. 预设止损、对冲与roll规则已写并可立即执行？<span class="score"
+              >[10分]</span
+            >
+          </div>
+          <div class="options">
+            <label
+              ><input type="radio" name="q8" value="yes" required /> 是</label
+            >
+            <label><input type="radio" name="q8" value="no" /> 否</label>
+          </div>
+        </div>
+        <div class="question">
+          <div class="question-title">
+            9. 记录：入场动机、预期年化、Greeks、最大可承受亏损、税务影响。<span
+              class="score"
+              >[10分]</span
+            >
+          </div>
+          <div class="options">
+            <label
+              ><input type="radio" name="q9" value="yes" required />
+              已记录</label
+            >
+            <label><input type="radio" name="q9" value="no" /> 未记录</label>
+          </div>
+        </div>
+        <div class="question">
+          <div class="question-title">
+            10. 你对本次交易的预期年化收益率是多少？<span class="score"
+              >[10分]</span
+            >
+          </div>
+          <input
+            type="number"
+            name="q10"
+            min="0"
+            max="100"
+            step="0.1"
+            required
+            style="width: 80px"
+          />
+          %
+          <span style="color: #888; font-size: 0.95em"
+            >（8-20%区间为合理）</span
+          >
+        </div>
+        <div style="text-align: center">
+          <button type="submit">提交并评分</button>
+        </div>
+      </form>
+      <div class="result" id="result"></div>
+    </div>
+    <script>
+      document.getElementById("quizForm").onsubmit = function (e) {
+        e.preventDefault();
+        let score = 0;
+        // 1. 宏观立场（牛市/中性/熊市，牛市/中性得分）
+        const q1 = document.querySelector('input[name="q1"]:checked').value;
+        if (q1 === "bull" || q1 === "neutral") score += 5;
+        // 2. IV Rank
+        const q2 = parseInt(
+          document.querySelector('input[name="q2"]').value,
+          10
+        );
+        if (q2 >= 60) score += 10;
+        else if (q2 >= 40) score += 5;
+        // 3. 流动性
+        if (document.querySelector('input[name="q3"]:checked').value === "yes")
+          score += 10;
+        // 4. 愿意长期持有
+        if (document.querySelector('input[name="q4"]:checked').value === "yes")
+          score += 15;
+        // 5. 未来30天无重大事件
+        if (document.querySelector('input[name="q5"]:checked').value === "no")
+          score += 10;
+        // 6. 行权价有安全边际
+        if (document.querySelector('input[name="q6"]:checked').value === "yes")
+          score += 10;
+        // 7. 最大下行可承受
+        if (document.querySelector('input[name="q7"]:checked').value === "yes")
+          score += 10;
+        // 8. 止损对冲roll规则
+        if (document.querySelector('input[name="q8"]:checked').value === "yes")
+          score += 10;
+        // 9. 记录入场动机等
+        if (document.querySelector('input[name="q9"]:checked').value === "yes")
+          score += 10;
+        // 10. 预期年化收益率
+        const q10 = parseFloat(
+          document.querySelector('input[name="q10"]').value
+        );
+        if (q10 >= 8 && q10 <= 20) score += 10;
+        else if ((q10 > 0 && q10 < 8) || (q10 > 20 && q10 <= 40)) score += 5;
+        // 显示结果
+        let msg = "你的总得分为：<b>" + score + " / 100</b>";
+        if (score >= 80) msg += "<br>建议：可以考虑入场，但仍需严格风控。";
+        else if (score >= 60) msg += "<br>建议：部分条件不理想，建议谨慎评估。";
+        else msg += "<br>建议：不建议入场，需补足短板。";
+        document.getElementById("result").innerHTML = msg;
+      };
+    </script>
+  </body>
+</html>

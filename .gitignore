@@ -1,0 +1,6 @@
+docs
+node_modules
+.DS_Store
+
+# Python ignore files
+__pycache__/
